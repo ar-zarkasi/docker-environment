@@ -9,9 +9,6 @@ services:
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./nginx/logs/:/etc/nginx/logs/
-      - /e/workspace/ghg-project/:/var/www/html/ghg/
-      - /e/workspace/rs-tiara-sella/:/var/www/html/rsts/
-      - /e/workspace/technergy-project/:/var/www/html/technergy/
     networks:
       - arfan-net
   redis:
@@ -142,6 +139,15 @@ services:
       - ./data/rabbitmq:/var/lib/rabbitmq
     networks:
       - arfan-net
+  adminer:
+    image: adminer
+    container_name: adminer
+    restart: always
+    ports:
+      - 6310:8080
+    networks:
+      - arfan-net
+
 
 networks:
   arfan-net:
