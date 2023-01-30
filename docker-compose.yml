@@ -126,17 +126,19 @@ services:
     networks:
       - arfan-net
   rabbitmq:
-    image: rabbitmq:3.9.27-alpine
+    image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     restart: unless-stopped
     ports:
-      - "6308:15672"
-      - "6309:5672"
+      - "6310:5672"
+      - "6309:15672"
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=arfan123
+      - RABBITMQ_DEFAULT_VHOST=rabbithost
     volumes:
-      - ./data/rabbitmq:/var/lib/rabbitmq
+      - ./data/rabbitmq/data/:/var/lib/rabbitmq/
+      - ./data/rabbitmq/log/:/var/log/rabbitmq
     networks:
       - arfan-net
   adminer:
@@ -144,7 +146,7 @@ services:
     container_name: adminer
     restart: always
     ports:
-      - 6310:8080
+      - 6311:8080
     networks:
       - arfan-net
 

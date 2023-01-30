@@ -1,0 +1,4 @@
+*.*
+!.gitignore
+!dbconfig.conf
+!README.md
