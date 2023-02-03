@@ -89,9 +89,9 @@ services:
       ME_CONFIG_MONGODB_PORT: 27017
     networks:
       - arfan-net
-  mysql_maria:
+  mariadb:
     image: mariadb:latest
-    container_name: mysql_maria
+    container_name: mariadb
     restart: always
     ports:
       - "6305:3306"
