@@ -1,0 +1,10 @@
+version: "3"
+services:
+  nodeapp:
+    image: "${APP_NAME}:${APP_TAG}"
+    env_file: "${ENV_FILE_PATH}"
+    networks:
+      - ${APP_NETWORK}
+    ports:
+      - "${PORT_APP}:${PORT_APP}"
+    restart: unless-stopped

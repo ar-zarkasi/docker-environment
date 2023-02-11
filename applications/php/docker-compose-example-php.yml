@@ -1,0 +1,16 @@
+version: "3"
+services:
+  application:
+    build:
+      args:
+        user: ${APP_USER}
+        uid: 1000
+      dockerfile: ${DOCKERFILE}
+    image: ${APP_NAME}:${APP_TAG}
+    container_name: ${CONTAINER_NAME}
+    restart: unless-stopped
+    working_dir: ${DOCKER_PATH}
+    volumes:
+      - ${APP_PATH}:${DOCKER_PATH}
+    networks:
+      - ${APP_NETWORK}
