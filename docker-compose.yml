@@ -5,48 +5,48 @@ services:
     container_name: nginx
     restart: unless-stopped
     ports:
-      - 80:80
+      - ${NGINX_PORT}:80
     volumes:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./nginx/logs/:/etc/nginx/logs/
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   redis:
     image: redis:latest
     ports:
-      - "6300:6379"
+      - "${REDIS_PORT}:6379"
     container_name: redis
     restart: "unless-stopped"
     volumes:
       - ./data/redis:/data
     command: redis-server --save 60 1 --loglevel warning
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   redis_commander:
     image: rediscommander/redis-commander
     ports:
-      - "6301:8081"
+      - "${REDIS_COMMANDER_PORT}:8081"
     container_name: redis_commander
     environment:
       - "REDIS_HOSTS=local:redis:6379"
     restart: "unless-stopped"
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   postgresql:
     image: postgres:13.9
     container_name: postgresql
     hostname: postgres
     ports:
-      - "6302:5432"
+      - "${POSTGRESQL_PORT}:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=${POSTGRE_USER}
+      - POSTGRES_PASSWORD=${POSTGRE_PASS}
       - PGDATA=/var/lib/postgresql/data
     volumes:
       - ./data/postgres:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin_container
@@ -54,106 +54,106 @@ services:
     depends_on:
       -  postgresql
     ports:
-      - "6303:80"
+      - "${PGADMIN_PORT}:80"
     environment:
-      - PGADMIN_DEFAULT_EMAIL=root@admin.com
-      - PGADMIN_DEFAULT_PASSWORD=arfan123
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
       - PGADMIN_LISTEN_PORT=80
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   mongodb:
     image: mongo:latest
     restart: always
     container_name: mongodb
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: toor
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     volumes:
       - ./data/mongo:/data/db:rw
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   mongoadmin:
     image: mongo-express
     container_name: mongoadmin
     restart: always
     ports:
-      - "6304:8081"
+      - "${MONGOADMIN_PORT}:8081"
     depends_on:
       - mongodb
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: toor
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASS}
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_MONGODB_PORT: 27017
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   mariadb:
     image: mariadb:latest
     container_name: mariadb
     restart: always
     ports:
-      - "6305:3306"
+      - "${MARIADB_PORT}:3306"
     volumes:
       - ./data/mariadb:/var/lib/mysql
     environment:
-      - MARIADB_ROOT_PASSWORD=arfan123
+      - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   mysql_5:
     image: mysql:5.5.62
     container_name: mysql_5
     restart: always
     ports:
-      - "6306:3306"
+      - "${MYSQL5_PORT}:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=arfan123
+      - MYSQL_ROOT_PASSWORD=${MYSQL5_ROOT_PASSWORD}
     volumes:
       - ./data/mysql/5.5.62:/var/lib/mysql
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   mysql_8:
     image: mysql:8.0.31
     container_name: mysql_8
     restart: always
     ports:
-      - "6307:3306"
+      - "${MYSQL8_PORT}:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=arfan123
+      - MYSQL_ROOT_PASSWORD=${MYSQL8_ROOT_PASSWORD}
     volumes:
       - ./data/mysql/8.0.31:/var/lib/mysql
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
     restart: unless-stopped
     ports:
-      - "6310:5672"
-      - "6309:15672"
+      - "${RABBITMQ_PORT}:5672"
+      - "${RABBITMQWEB_PORT}:15672"
     environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=arfan123
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
       - RABBITMQ_DEFAULT_VHOST=rabbithost
     volumes:
       - ./data/rabbitmq/data/:/var/lib/rabbitmq/
       - ./data/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
   adminer:
     image: adminer
     container_name: adminer
     restart: always
     ports:
-      - 6311:8080
+      - ${ADMINER_PORT}:8080
     networks:
-      - arfan-net
+      - ${APP_NETWORK}
 
 
 networks:
-  arfan-net:
-    name: arfan-net
+  ${APP_NETWORK}:
+    name: ${APP_NETWORK}
     driver: bridge
 
   

@@ -12,5 +12,3 @@ services:
     working_dir: ${DOCKER_PATH}
     volumes:
       - ${APP_PATH}:${DOCKER_PATH}
-    networks:
-      - ${APP_NETWORK}

@@ -1,12 +1,15 @@
 # INTRODUCTION
 
-This is my docker compose use for my windows computer
+This is my docker compose use for my workspace develop environment
 
 ## Setup
 
-- update docker-compose.yml, adjust for you need
+- copy .env.example to .env
+- update .env, adjust for you need
 - run
 ```bash
-docker compose up -d --build
+docker compose -f docker-compose.yml --env-file=.env up -d --build
 ```
-- edit C:/Windows/System32/driver/etc/hosts for register local domain as a container nginx configuration
+- set your local domain in nginx conf folder (nginx/conf.d/dbconfig.conf)
+- in windows, edit C:/Windows/System32/driver/etc/hosts for register local domain as a container nginx configuration
+- in linux/mac edit in /etc/hosts file for register local domain

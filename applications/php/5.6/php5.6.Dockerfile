@@ -7,19 +7,15 @@ RUN apk add git iputils nano curl
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+RUN pecl channel-update pecl.php.net
+
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
-    && pecl install uploadprogress \
-    && docker-php-ext-enable uploadprogress \
     && apk del .build-deps $PHPIZE_DEPS \
     && chmod uga+x /usr/local/bin/install-php-extensions && sync \
     && install-php-extensions bcmath \
             bz2 \
             calendar \
-            curl \
             exif \
-            fileinfo \
-            ftp \
-            gd \
             gettext \
             imagick \
             imap \
@@ -29,9 +25,8 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
             memcached \
             mongodb \
             mysqli \
-            openssl \
-            pdo \
             pdo_mysql \
+            pgsql \
             pdo_pgsql \
             redis \
             sockets \

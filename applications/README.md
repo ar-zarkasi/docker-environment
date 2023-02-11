@@ -5,7 +5,7 @@ Using Your PHP Application in docker
 3. open cmd/terminal and build with this command
 
 ```bash
-docker compose -f {file_docker_compose} --env-file={"location .env file"} up -d --build
+docker compose -f {file_docker_compose} -f {file_docker_network} --env-file={"location .env file"} up -d --build
 ```
 
 4. after build complete, copy nginx config example to nginx conf folder and setup with your spec.
