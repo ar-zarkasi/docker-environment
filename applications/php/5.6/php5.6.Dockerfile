@@ -7,8 +7,6 @@ RUN apk add git iputils nano curl
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-RUN pecl channel-update pecl.php.net
-
 RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
     && apk del .build-deps $PHPIZE_DEPS \
     && chmod uga+x /usr/local/bin/install-php-extensions && sync \
@@ -16,11 +14,11 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
             bz2 \
             calendar \
             exif \
+            gd \
             gettext \
             imagick \
             imap \
             intl \
-            mbstring \
             mcrypt \
             memcached \
             mongodb \

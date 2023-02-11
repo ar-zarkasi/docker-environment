@@ -27,7 +27,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
             mbstring \
             mcrypt \
             memcached \
-            mongo \
             mongodb \
             mysqli \
             openssl \
