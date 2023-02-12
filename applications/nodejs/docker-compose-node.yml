@@ -4,7 +4,12 @@ services:
     image: "${APP_NAME}:${APP_TAG}"
     env_file: "${ENV_FILE_PATH}"
     networks:
-      - ${APP_NETWORK}
+      - default
     ports:
       - "${PORT_APP}:${PORT_APP}"
     restart: unless-stopped
+
+networks:
+  default:
+    name: ${APP_NETWORK}
+    external: true

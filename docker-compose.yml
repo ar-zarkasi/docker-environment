@@ -10,7 +10,7 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d/
       - ./nginx/logs/:/etc/nginx/logs/
     networks:
-      - ${APP_NETWORK}
+      - default
   redis:
     image: redis:latest
     ports:
@@ -21,7 +21,7 @@ services:
       - ./data/redis:/data
     command: redis-server --save 60 1 --loglevel warning
     networks:
-      - ${APP_NETWORK}
+      - default
   redis_commander:
     image: rediscommander/redis-commander
     ports:
@@ -31,7 +31,7 @@ services:
       - "REDIS_HOSTS=local:redis:6379"
     restart: "unless-stopped"
     networks:
-      - ${APP_NETWORK}
+      - default
   postgresql:
     image: postgres:13.9
     container_name: postgresql
@@ -46,7 +46,7 @@ services:
       - ./data/postgres:/var/lib/postgresql/data
     restart: unless-stopped
     networks:
-      - ${APP_NETWORK}
+      - default
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin_container
@@ -57,12 +57,12 @@ services:
       - "${PGADMIN_PORT}:80"
     environment:
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASS}
       - PGADMIN_LISTEN_PORT=80
     volumes:
       - ./data/pgadmin:/var/lib/pgadmin
     networks:
-      - ${APP_NETWORK}
+      - default
   mongodb:
     image: mongo:latest
     restart: always
@@ -73,7 +73,7 @@ services:
     volumes:
       - ./data/mongo:/data/db:rw
     networks:
-      - ${APP_NETWORK}
+      - default
   mongoadmin:
     image: mongo-express
     container_name: mongoadmin
@@ -88,7 +88,7 @@ services:
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_MONGODB_PORT: 27017
     networks:
-      - ${APP_NETWORK}
+      - default
   mariadb:
     image: mariadb:latest
     container_name: mariadb
@@ -100,7 +100,7 @@ services:
     environment:
       - MARIADB_ROOT_PASSWORD=${MARIADB_ROOT_PASSWORD}
     networks:
-      - ${APP_NETWORK}
+      - default
   mysql_5:
     image: mysql:5.5.62
     container_name: mysql_5
@@ -112,7 +112,7 @@ services:
     volumes:
       - ./data/mysql/5.5.62:/var/lib/mysql
     networks:
-      - ${APP_NETWORK}
+      - default
   mysql_8:
     image: mysql:8.0.31
     container_name: mysql_8
@@ -124,7 +124,7 @@ services:
     volumes:
       - ./data/mysql/8.0.31:/var/lib/mysql
     networks:
-      - ${APP_NETWORK}
+      - default
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq
@@ -140,7 +140,7 @@ services:
       - ./data/rabbitmq/data/:/var/lib/rabbitmq/
       - ./data/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - ${APP_NETWORK}
+      - default
   adminer:
     image: adminer
     container_name: adminer
@@ -148,11 +148,11 @@ services:
     ports:
       - ${ADMINER_PORT}:8080
     networks:
-      - ${APP_NETWORK}
+      - default
 
 
 networks:
-  ${APP_NETWORK}:
+  default:
     name: ${APP_NETWORK}
     driver: bridge
 
