@@ -102,7 +102,7 @@ services:
     networks:
       - default
   mysql_5:
-    image: mysql:5.5.62
+    image: mysql:5.6.51
     container_name: mysql_5
     restart: always
     ports:
@@ -110,7 +110,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL5_ROOT_PASSWORD}
     volumes:
-      - ./data/mysql/5.5.62:/var/lib/mysql
+      - ./data/mysql/5.6.51:/var/lib/mysql
     networks:
       - default
   mysql_8:

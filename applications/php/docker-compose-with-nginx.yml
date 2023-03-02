@@ -9,6 +9,7 @@ services:
     volumes:
       - ${NGINX_CONF_PATH}:/etc/nginx/conf.d/
       - ${NGINX_LOG_PATH}:/etc/nginx/logs/
+      - ${APP_PATH}:${DOCKER_PATH}
     networks:
       - default
   application:

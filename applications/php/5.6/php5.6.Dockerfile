@@ -21,12 +21,10 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
             intl \
             mcrypt \
             memcached \
-            mongodb \
             mysqli \
             pdo_mysql \
             pgsql \
             pdo_pgsql \
-            redis \
             sockets \
             sysvsem \
             sysvshm \
@@ -47,6 +45,6 @@ RUN mkdir -p /home/$user/.composer && \
     chown -R $user:www-data /home/$user
 
 WORKDIR ${DOCKER_PATH}
-RUN chown -R $user:www-data /var/www/html
+RUN chown -R $user:www-data ${DOCKER_PATH}
 
 USER $user
