@@ -1,0 +1,58 @@
+version: "3"
+services:
+  php56:
+    build:
+      args:
+        user: ${DOCKER_APP_USER}
+        uid: 1000
+      dockerfile: ./applications/php/5.6/php5.6.Dockerfile
+    image: php56:dev
+    container_name: php56
+    restart: unless-stopped
+    working_dir: ${APP_WORKING_DIR}
+    volumes:
+      - ${APP_PATH}:${APP_WORKING_DIR}
+    networks:
+      - default
+  php74:
+    build:
+      args:
+        user: ${DOCKER_APP_USER}
+        uid: 1000
+      dockerfile: ./applications/php/7.4/php7.4.Dockerfile
+    image: php74:dev
+    container_name: php74
+    restart: unless-stopped
+    working_dir: ${APP_WORKING_DIR}
+    volumes:
+      - ${APP_PATH}:${APP_WORKING_DIR}
+    networks:
+      - default
+  php81:
+    build:
+      args:
+        user: ${DOCKER_APP_USER}
+        uid: 1000
+      dockerfile: ./applications/php/8.1/php8.1.Dockerfile
+    image: php81:dev
+    container_name: php81
+    restart: unless-stopped
+    working_dir: ${APP_WORKING_DIR}
+    volumes:
+      - ${APP_PATH}:${APP_WORKING_DIR}
+    networks:
+      - default
+  php82:
+    build:
+      args:
+        user: ${DOCKER_APP_USER}
+        uid: 1000
+      dockerfile: ./applications/php/8.2/php8.2.Dockerfile
+    image: php82:dev
+    container_name: php82
+    restart: unless-stopped
+    working_dir: ${APP_WORKING_DIR}
+    volumes:
+      - ${APP_PATH}:${APP_WORKING_DIR}
+    networks:
+      - default
